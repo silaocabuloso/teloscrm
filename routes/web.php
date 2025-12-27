@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\FornecedorController;
     use App\Http\Controllers\FornecedorVinculoController;
     use App\Http\Controllers\ProdutoController;
+    use App\Http\Controllers\ProdutoUploadController;
 
 /*
 
@@ -27,6 +28,12 @@ Route::get('/', function () {
 
 */
 Route::middleware(['auth', 'usuario.ativo'])->group(function () {
+
+    Route::get('/produtos/upload', [ProdutoUploadController::class, 'create'])
+    ->name('produtos.upload.create');
+
+Route::post('/produtos/upload', [ProdutoUploadController::class, 'store'])
+    ->name('produtos.upload');
 
     Route::resource('produtos', ProdutoController::class)
     ->only(['index', 'create', 'store']);
