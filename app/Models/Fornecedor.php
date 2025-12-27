@@ -42,5 +42,14 @@ class Fornecedor extends Model
     return $this->belongsToMany(User::class);
 }
 
+/**
+ * Um fornecedor possui vários produtos
+ */
+public function produtos()
+{
+    return $this->hasMany(Produto::class);
+}
+
+
 }
 

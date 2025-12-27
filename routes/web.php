@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\FornecedorController;
     use App\Http\Controllers\FornecedorVinculoController;
+    use App\Http\Controllers\ProdutoController;
 
 /*
 
@@ -26,6 +27,9 @@ Route::get('/', function () {
 
 */
 Route::middleware(['auth', 'usuario.ativo'])->group(function () {
+
+    Route::resource('produtos', ProdutoController::class)
+    ->only(['index', 'create', 'store']);
 
     Route::resource('fornecedores', FornecedorController::class);
 
