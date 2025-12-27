@@ -21,6 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'tipo',
+        'status',
     ];
 
     /**
@@ -45,4 +47,15 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+//retorna true se o usuario for administrador
+    public function isAdmin(): bool
+    {
+        return $this->tipo === 'admin';
+    }
+
+//retorna true se o usuario estiver ativo
+   public function isAtivo(): bool
+   {
+    return $this->status === true;
+   }
 }
