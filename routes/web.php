@@ -5,6 +5,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\FornecedorController;
+    use App\Http\Controllers\FornecedorVinculoController;
 
 /*
 
@@ -58,7 +59,14 @@ Route::middleware(['auth', 'usuario.ativo'])->group(function () {
     */
     Route::middleware('admin')->group(function () {
 
-       //
+
+
+Route::get('/vinculos', [FornecedorVinculoController::class, 'index'])
+    ->name('vinculos.index');
+
+Route::post('/vinculos', [FornecedorVinculoController::class, 'store'])
+    ->name('vinculos.store');
+
 
     });
 

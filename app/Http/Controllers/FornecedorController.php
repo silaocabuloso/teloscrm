@@ -13,16 +13,25 @@ class FornecedorController extends Controller
     /**
      * Lista os fornecedores.
      */
-    public function index()
-    {
+public function index()
+{
+    // Usuário logado
+    $user = auth()->user();
+
+    // Se for administrador, pode ver todos os fornecedores
+    if ($user->isAdmin()) {
         $fornecedores = Fornecedor::all();
-
-        
-
-        return inertia('Fornecedores/Index', [
-            'fornecedores' => $fornecedores,
-        ]);
+    } 
+    // Se for vendedor, vê apenas os fornecedores vinculados a ele
+    else {
+        $fornecedores = $user->fornecedores;
     }
+
+    return inertia('Fornecedores/Index', [
+        'fornecedores' => $fornecedores,
+    ]);
+}
+
 
     /**
      * Exibe formulário de criação.

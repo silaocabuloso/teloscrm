@@ -26,4 +26,21 @@ class Fornecedor extends Model
         'endereco',
         'status',
     ];
+
+       /**
+     * Relacionamento N:N
+     * Um usuário (vendedor) pode estar vinculado a vários fornecedores.
+     */
+    public function fornecedores()
+    {
+        return $this->belongsToMany(
+            \App\Models\Fornecedor::class
+        );
+    }
+    public function usuarios()
+{
+    return $this->belongsToMany(User::class);
 }
+
+}
+
