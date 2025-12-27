@@ -4,11 +4,12 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\FornecedorController;
 
 /*
-|--------------------------------------------------------------------------
-| Rotas públicas
-|--------------------------------------------------------------------------
+
+ *Rotas públicas
+
 */
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -24,6 +25,13 @@ Route::get('/', function () {
 
 */
 Route::middleware(['auth', 'usuario.ativo'])->group(function () {
+
+    Route::resource('fornecedores', FornecedorController::class);
+
+        Route::patch(
+        'fornecedores/{fornecedor}/status',
+        [FornecedorController::class, 'toggleStatus']
+    )->name('fornecedores.status');
 
     /**
      * Dashboard principal do sistema
@@ -50,8 +58,7 @@ Route::middleware(['auth', 'usuario.ativo'])->group(function () {
     */
     Route::middleware('admin')->group(function () {
 
-        // Intencionalmente vazio neste momento
-        // Será utilizado nas próximas fases (ex: fornecedores, usuários)
+       //
 
     });
 
