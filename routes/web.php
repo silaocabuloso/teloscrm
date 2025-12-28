@@ -9,6 +9,7 @@ use App\Http\Controllers\FornecedorController;
     use App\Http\Controllers\ProdutoController;
     use App\Http\Controllers\ProdutoUploadController;
     use App\Http\Controllers\PedidoController;
+    use App\Http\Controllers\RelatorioController;
 
 /*
 
@@ -79,6 +80,9 @@ Route::post('/produtos/upload', [ProdutoUploadController::class, 'store'])
     */
     Route::middleware('admin')->group(function () {
 
+
+        Route::post('/relatorios/pedidos', [RelatorioController::class, 'enviar'])
+    ->name('relatorios.pedidos.enviar');
 
 
 Route::get('/vinculos', [FornecedorVinculoController::class, 'index'])
