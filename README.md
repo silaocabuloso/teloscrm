@@ -211,7 +211,7 @@ Esse vínculo define quais fornecedores, produtos, pedidos e dados de API o vend
 
 ### Dashboard
 
-Após o login, o sistema apresenta um dashboard com:
+Após o login em http://localhost, o sistema apresenta um dashboard com:
 
 * Total de pedidos
 * Valor total dos pedidos
