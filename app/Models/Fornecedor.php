@@ -50,6 +50,11 @@ public function produtos()
     return $this->hasMany(Produto::class);
 }
 
+public function pedidos()
+{
+    return $this->hasMany(Pedido::class);
+}
+
 
 }
 

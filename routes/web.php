@@ -8,6 +8,7 @@ use App\Http\Controllers\FornecedorController;
     use App\Http\Controllers\FornecedorVinculoController;
     use App\Http\Controllers\ProdutoController;
     use App\Http\Controllers\ProdutoUploadController;
+    use App\Http\Controllers\PedidoController;
 
 /*
 
@@ -28,6 +29,14 @@ Route::get('/', function () {
 
 */
 Route::middleware(['auth', 'usuario.ativo'])->group(function () {
+
+    Route::resource('pedidos', PedidoController::class)
+    ->only(['index', 'create', 'store']);
+
+Route::get(
+    '/fornecedores/{fornecedor}/produtos',
+    [PedidoController::class, 'produtosPorFornecedor']
+);
 
     Route::get('/produtos/upload', [ProdutoUploadController::class, 'create'])
     ->name('produtos.upload.create');
