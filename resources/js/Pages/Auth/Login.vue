@@ -1,100 +1,105 @@
 <script setup>
-import Checkbox from '@/Components/Checkbox.vue';
-import GuestLayout from '@/Layouts/GuestLayout.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import { Head, useForm } from '@inertiajs/vue3'
 
 defineProps({
-    canResetPassword: {
-        type: Boolean,
-    },
-    status: {
-        type: String,
-    },
-});
+    canResetPassword: Boolean,
+    status: String,
+})
 
 const form = useForm({
     email: '',
     password: '',
     remember: false,
-});
+})
 
 const submit = () => {
-    form.post(route('login'), {
-        onFinish: () => form.reset('password'),
-    });
-};
+    form.post(route('login'))
+}
 </script>
 
 <template>
-    <GuestLayout>
-        <Head title="Log in" />
+    <Head title="Login" />
 
-        <div v-if="status" class="mb-4 text-sm font-medium text-green-600">
-            {{ status }}
+    <div class="min-h-screen flex">
+        <!-- COLUNA ESQUERDA -->
+        <div class="hidden lg:flex w-1/2 bg-gray-900 text-white items-center justify-center p-10">
+            <div class="text-center space-y-6">
+                <h1 class="text-4xl font-bold">Mini ERP</h1>
+
+                <p class="text-gray-300 text-lg">
+                    Sistema de pedidos para fornecedores
+                </p>
+
+           
+
+                <p class="text-sm text-gray-400">
+                    Laravel • Vue • Docker • API • Jobs
+                </p>
+            </div>
         </div>
 
-        <form @submit.prevent="submit">
-            <div>
-                <InputLabel for="email" value="Email" />
+        <!-- COLUNA DIREITA -->
+        <div class="w-full lg:w-1/2 flex items-center justify-center bg-gray-50">
+            <div class="w-full max-w-md p-8 bg-white rounded-lg shadow">
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">
+                    Acesso ao sistema
+                </h2>
 
-                <TextInput
-                    id="email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    v-model="form.email"
-                    required
-                    autofocus
-                    autocomplete="username"
-                />
+                <p class="text-gray-500 mb-6">
+                    Entre com suas credenciais
+                </p>
 
-                <InputError class="mt-2" :message="form.errors.email" />
-            </div>
+                <form @submit.prevent="submit" class="space-y-4">
+                    <!-- EMAIL -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">
+                            Email
+                        </label>
 
-            <div class="mt-4">
-                <InputLabel for="password" value="Password" />
+                        <input
+                            v-model="form.email"
+                            type="email"
+                            class="mt-1 w-full rounded border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
+                            required
+                        />
+                    </div>
 
-                <TextInput
-                    id="password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password"
-                    required
-                    autocomplete="current-password"
-                />
+                    <!-- SENHA -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">
+                            Senha
+                        </label>
 
-                <InputError class="mt-2" :message="form.errors.password" />
-            </div>
+                        <input
+                            v-model="form.password"
+                            type="password"
+                            class="mt-1 w-full rounded border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
+                            required
+                        />
+                    </div>
 
-            <div class="mt-4 block">
-                <label class="flex items-center">
-                    <Checkbox name="remember" v-model:checked="form.remember" />
-                    <span class="ms-2 text-sm text-gray-600"
-                        >Remember me</span
+                    <!-- ERRO -->
+                    <div
+                        v-if="form.errors.email"
+                        class="text-sm text-red-600"
                     >
-                </label>
-            </div>
+                        {{ form.errors.email }}
+                    </div>
 
-            <div class="mt-4 flex items-center justify-end">
-                <Link
-                    v-if="canResetPassword"
-                    :href="route('password.request')"
-                    class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                >
-                    Forgot your password?
-                </Link>
+                    <!-- BOTÃO -->
+                    <button
+                        type="submit"
+                        :disabled="form.processing"
+                        class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 rounded transition"
+                    >
+                        Entrar
+                    </button>
+                </form>
 
-                <PrimaryButton
-                    class="ms-4"
-                    :class="{ 'opacity-25': form.processing }"
-                    :disabled="form.processing"
-                >
-                    Log in
-                </PrimaryButton>
+                <p class="text-xs text-center text-gray-400 mt-6">
+                    © Mini ERP — Teste Técnico Full Stack
+                </p>
             </div>
-        </form>
-    </GuestLayout>
+        </div>
+    </div>
 </template>

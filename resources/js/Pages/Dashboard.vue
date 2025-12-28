@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, computed } from 'vue'
 import Chart from 'chart.js/auto'
-import Navbar from '@/Components/Navbar.vue'
+import AppLayout from '@/Layouts/AppLayout.vue'
 
 const props = defineProps({
     totalPedidos: {
@@ -63,7 +63,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <Navbar />
+    <AppLayout>
 
     <div class="p-6">
         <h1 class="text-2xl font-bold mb-6">
@@ -104,6 +104,7 @@ onMounted(() => {
 
 
     </div>
+       </AppLayout>
 </template>
 
 <style scoped>

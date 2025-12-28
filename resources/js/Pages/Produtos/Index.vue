@@ -1,4 +1,6 @@
 <script setup>
+import AppLayout from '@/Layouts/AppLayout.vue'
+
 defineProps({
     produtos: {
         type: Array,
@@ -8,71 +10,125 @@ defineProps({
 </script>
 
 <template>
-    <div class="p-6">
-        <h1 class="text-2xl font-bold mb-4">Produtos</h1>
+    <AppLayout>
+        <div class="p-6 max-w-7xl mx-auto">
 
-        <table class="w-full border">
-            <thead>
-                <tr class="bg-gray-100">
-                    <th class="border p-2">Fornecedor</th>
-                    <th class="border p-2">Referência</th>
-                    <th class="border p-2">Nome</th>
-                    <th class="border p-2">Cor</th>
-                    <th class="border p-2">Preço</th>
-                    <th class="border p-2">Status</th>
-                </tr>
-            </thead>
+            <!-- HEADER -->
+            <div class="mb-6">
+                <h1 class="text-2xl font-bold">
+                    Produtos
+                </h1>
+                <p class="text-gray-600">
+                    Listagem de produtos cadastrados no sistema
+                </p>
+            </div>
 
-            <tbody>
-                <tr
-                    v-for="produto in produtos"
-                    :key="produto.id"
-                >
-                    <td class="border p-2">
-                        {{ produto.fornecedor.nome }}
-                    </td>
+            <!-- CARD -->
+            <div class="card overflow-x-auto">
+                <table class="w-full border-collapse">
 
-                    <td class="border p-2">
-                        {{ produto.referencia }}
-                    </td>
+                    <thead>
+                        <tr class="bg-gray-100 text-left text-sm">
+                            <th class="th">Fornecedor</th>
+                            <th class="th">Referência</th>
+                            <th class="th">Nome</th>
+                            <th class="th">Cor</th>
+                            <th class="th">Preço</th>
+                            <th class="th">Status</th>
+                        </tr>
+                    </thead>
 
-                    <td class="border p-2">
-                        {{ produto.nome }}
-                    </td>
-
-                    <td class="border p-2">
-                        {{ produto.cor ?? '-' }}
-                    </td>
-
-                    <td class="border p-2">
-                        R$ {{ Number(produto.preco).toFixed(2) }}
-                    </td>
-
-                    <td class="border p-2">
-                        <span
-                            v-if="produto.status"
-                            class="text-green-600 font-semibold"
+                    <tbody>
+                        <tr
+                            v-for="produto in produtos"
+                            :key="produto.id"
+                            class="border-t"
                         >
-                            Ativo
-                        </span>
-                        <span
-                            v-else
-                            class="text-red-600 font-semibold"
-                        >
-                            Inativo
-                        </span>
-                    </td>
-                </tr>
+                            <td class="td">
+                                {{ produto.fornecedor.nome }}
+                            </td>
 
-                <tr v-if="produtos.length === 0">
-                    <td
-                        colspan="6"
-                        class="text-center p-4 text-gray-500"
-                    >
-                        Nenhum produto cadastrado.
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+                            <td class="td">
+                                {{ produto.referencia }}
+                            </td>
+
+                            <td class="td">
+                                {{ produto.nome }}
+                            </td>
+
+                            <td class="td">
+                                {{ produto.cor ?? '-' }}
+                            </td>
+
+                            <td class="td">
+                                R$ {{ Number(produto.preco).toFixed(2) }}
+                            </td>
+
+                            <td class="td">
+                                <span
+                                    v-if="produto.status"
+                                    class="badge badge-green"
+                                >
+                                    Ativo
+                                </span>
+                                <span
+                                    v-else
+                                    class="badge badge-red"
+                                >
+                                    Inativo
+                                </span>
+                            </td>
+                        </tr>
+
+                        <tr v-if="produtos.length === 0">
+                            <td
+                                colspan="6"
+                                class="text-center p-6 text-gray-500"
+                            >
+                                Nenhum produto cadastrado.
+                            </td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+
+        </div>
+    </AppLayout>
 </template>
+
+<style scoped>
+.card {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+}
+
+.th {
+    padding: 12px;
+    font-weight: 600;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.td {
+    padding: 12px;
+}
+
+.badge {
+    display: inline-block;
+    padding: 4px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 999px;
+}
+
+.badge-green {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.badge-red {
+    background: #fee2e2;
+    color: #991b1b;
+}
+</style>

@@ -1,8 +1,8 @@
 <script setup>
 import { useForm, Link, usePage } from '@inertiajs/vue3'
+import AppLayout from '@/Layouts/AppLayout.vue'
 
 const page = usePage()
-
 const fornecedor = page.props.fornecedor
 
 const form = useForm({
@@ -20,27 +20,177 @@ function submit() {
 </script>
 
 <template>
-    <div class="p-6 max-w-xl mx-auto">
-        <h1 class="text-2xl font-bold mb-4">Editar Fornecedor</h1>
+    <AppLayout>
+        <div class="p-6 max-w-3xl mx-auto">
 
-        <form @submit.prevent="submit" class="space-y-4">
-            <input v-model="form.nome" class="w-full border p-2" />
-            <input v-model="form.email" class="w-full border p-2" />
-            <input v-model="form.cnpj" class="w-full border p-2" />
-            <input v-model="form.cep" class="w-full border p-2" />
-            <input v-model="form.endereco" class="w-full border p-2" />
-
-            <label class="flex items-center gap-2">
-                <input type="checkbox" v-model="form.status" />
-                Ativo
-            </label>
-
-            <div class="flex justify-between">
-                <Link :href="route('fornecedores.index')">Voltar</Link>
-                <button class="bg-blue-600 text-white px-4 py-2 rounded">
-                    Salvar
-                </button>
+            <!-- HEADER -->
+            <div class="mb-6">
+                <h1 class="text-2xl font-bold">
+                    Editar Fornecedor
+                </h1>
+                <p class="text-gray-600">
+                    Atualize as informações do fornecedor
+                </p>
             </div>
-        </form>
-    </div>
+
+            <!-- CARD -->
+            <div class="card">
+                <form @submit.prevent="submit" class="space-y-5">
+
+                    <!-- NOME -->
+                    <div>
+                        <label class="label">Nome</label>
+                        <input
+                            v-model="form.nome"
+                            type="text"
+                            class="input"
+                        />
+                        <p v-if="form.errors.nome" class="error">
+                            {{ form.errors.nome }}
+                        </p>
+                    </div>
+
+                    <!-- EMAIL -->
+                    <div>
+                        <label class="label">Email</label>
+                        <input
+                            v-model="form.email"
+                            type="email"
+                            class="input"
+                        />
+                        <p v-if="form.errors.email" class="error">
+                            {{ form.errors.email }}
+                        </p>
+                    </div>
+
+                    <!-- CNPJ -->
+                    <div>
+                        <label class="label">CNPJ</label>
+                        <input
+                            v-model="form.cnpj"
+                            type="text"
+                            class="input"
+                        />
+                        <p v-if="form.errors.cnpj" class="error">
+                            {{ form.errors.cnpj }}
+                        </p>
+                    </div>
+
+                    <!-- CEP -->
+                    <div>
+                        <label class="label">CEP</label>
+                        <input
+                            v-model="form.cep"
+                            type="text"
+                            class="input"
+                        />
+                        <p v-if="form.errors.cep" class="error">
+                            {{ form.errors.cep }}
+                        </p>
+                    </div>
+
+                    <!-- ENDEREÇO -->
+                    <div>
+                        <label class="label">Endereço</label>
+                        <input
+                            v-model="form.endereco"
+                            type="text"
+                            class="input"
+                        />
+                        <p v-if="form.errors.endereco" class="error">
+                            {{ form.errors.endereco }}
+                        </p>
+                    </div>
+
+                    <!-- STATUS -->
+                    <div class="flex items-center gap-3 pt-2">
+                        <input
+                            type="checkbox"
+                            v-model="form.status"
+                            class="h-4 w-4"
+                        />
+                        <span class="text-sm">
+                            Fornecedor ativo
+                        </span>
+                    </div>
+
+                    <!-- AÇÕES -->
+                    <div class="flex gap-3 pt-6">
+                        <button
+                            type="submit"
+                            class="btn-primary"
+                            :disabled="form.processing"
+                        >
+                            Salvar alterações
+                        </button>
+
+                        <Link
+                            :href="route('fornecedores.index')"
+                            class="btn-secondary"
+                        >
+                            Cancelar
+                        </Link>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+    </AppLayout>
 </template>
+
+<style scoped>
+.card {
+    background: white;
+    padding: 24px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+}
+
+.label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.input {
+    width: 100%;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 8px 10px;
+}
+
+.input:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 1px #2563eb;
+}
+
+.error {
+    color: #dc2626;
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+.btn-primary {
+    background: #2563eb;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 6px;
+}
+
+.btn-primary:hover {
+    background: #1d4ed8;
+}
+
+.btn-secondary {
+    padding: 10px 16px;
+    border-radius: 6px;
+    border: 1px solid #d1d5db;
+    background: white;
+}
+
+.btn-secondary:hover {
+    background: #f3f4f6;
+}
+</style>
