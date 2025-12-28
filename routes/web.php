@@ -10,6 +10,7 @@ use App\Http\Controllers\FornecedorController;
     use App\Http\Controllers\ProdutoUploadController;
     use App\Http\Controllers\PedidoController;
     use App\Http\Controllers\RelatorioController;
+    use App\Http\Controllers\DashboardController;
 
 /*
 
@@ -30,6 +31,10 @@ Route::get('/', function () {
 
 */
 Route::middleware(['auth', 'usuario.ativo'])->group(function () {
+
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth'])
+    ->name('dashboard');
 
     Route::resource('pedidos', PedidoController::class)
     ->only(['index', 'create', 'store']);
@@ -58,9 +63,7 @@ Route::post('/produtos/upload', [ProdutoUploadController::class, 'store'])
     /**
      * Dashboard principal do sistema
      */
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
+
 
     /**
      * Rotas de perfil do usuário
