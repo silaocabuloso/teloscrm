@@ -1,35 +1,40 @@
+Perfeito 👍
+Abaixo está **o README completo em texto corrido**, **sem blocos de bash**, exatamente como você pediu — ideal para leitura direta no GitHub, sem “cara de script”.
+
+---
+
 # TelosCRM
 
 ## Visão geral
 
 O TelosCRM é um **mini ERP de pedidos para fornecedores**, desenvolvido como parte de um **teste técnico para a vaga de Programador Full Stack**.
 
-A ideia do projeto é cobrir um fluxo completo, semelhante ao que se encontra em sistemas reais de ERP, incluindo controle de usuários, fornecedores, produtos, pedidos, API, processamento em background e um dashboard de acompanhamento.
+A proposta do projeto é simular um fluxo real de ERP, cobrindo desde autenticação e permissões até processamento em background, API e relatórios automatizados.
 
-O sistema possui:
+O sistema contempla:
 
-* Autenticação de usuários
-* Controle de permissões (Administrador e Vendedor)
-* Cadastro de fornecedores
-* Cadastro de produtos (manual e via CSV)
-* Cadastro e listagem de pedidos
-* API autenticada para pedidos
-* Processamento assíncrono com Jobs
-* Envio de e-mails
-* Relatórios automáticos via agendamento (Cron)
-* Dashboard com indicadores e gráfico
+• Autenticação de usuários
+• Controle de permissões (Administrador e Vendedor)
+• Cadastro de fornecedores
+• Cadastro de produtos (manual e via CSV)
+• Cadastro e listagem de pedidos
+• API autenticada para pedidos
+• Processamento assíncrono com Jobs
+• Envio de e-mails
+• Relatórios automáticos via agendamento (Cron)
+• Dashboard com indicadores e gráfico
 
 ---
 
 ## Tecnologias utilizadas
 
-* Laravel 12
-* Vue 3 + Inertia
-* Docker (Laravel Sail)
-* MySQL
-* Redis
-* Chart.js
-* Mailpit
+• Laravel 12
+• Vue 3 + Inertia
+• Docker (Laravel Sail)
+• MySQL
+• Redis
+• Chart.js
+• Mailpit
 
 ---
 
@@ -37,12 +42,12 @@ O sistema possui:
 
 Antes de iniciar, é necessário ter instalado:
 
-* Docker Desktop
-* Git
-* Node.js (versão 18 ou superior)
-* WSL 2 (caso esteja no Windows)
+• Docker Desktop
+• Git
+• Node.js (versão 18 ou superior)
+• WSL 2 (caso esteja no Windows)
 
-Não é necessário ter PHP ou MySQL instalados localmente, todo o ambiente roda dentro do Docker.
+Não é necessário PHP nem MySQL instalados localmente. Todo o ambiente roda via Docker.
 
 ---
 
@@ -50,71 +55,57 @@ Não é necessário ter PHP ou MySQL instalados localmente, todo o ambiente roda
 
 ### 1. Clonar o repositório
 
+Clonar o repositório do GitHub e acessar a pasta do projeto.
 
-git clone https://github.com/silaocabuloso/teloscrm.git
-cd teloscrm
-
+Repositório:
+https://github.com/silaocabuloso/teloscrm.git
 
 ---
 
 ### 2. Criar o arquivo de ambiente
 
+Copiar o arquivo .env.example para .env.
 
-cp .env.example .env
-
-
-O `.env` já está configurado para funcionar com o Laravel Sail.
+O arquivo .env já está configurado para funcionar com o Laravel Sail.
 
 ---
 
 ### 3. Subir os containers com Docker
 
+Subir os containers utilizando o Laravel Sail.
 
-./vendor/bin/sail up -d
+Isso irá iniciar os seguintes serviços:
 
+• PHP
+• MySQL
+• Redis
+• Mailpit
 
-Isso irá subir os containers de:
-
-* PHP
-* MySQL
-* Redis
-* Mailpit
-
-Para conferir se está tudo rodando:
-
-
-./vendor/bin/sail ps
-
+É possível verificar se os containers estão rodando corretamente utilizando o comando de listagem do Sail.
 
 ---
 
 ### 4. Instalar dependências do backend
 
-
-./vendor/bin/sail composer install
-
+Instalar as dependências do Laravel via Composer usando o Sail.
 
 ---
 
 ### 5. Gerar a chave da aplicação
 
-
-./vendor/bin/sail artisan key:generate
-
+Gerar a APP_KEY do Laravel.
 
 ---
 
-### 6. Criar as tabelas e usuários iniciais
+### 6. Criar tabelas e dados iniciais
 
+Executar as migrations e seeders.
 
-./vendor/bin/sail artisan migrate --seed
+Esse processo:
 
-
-Esse comando:
-
-* Cria todas as tabelas do banco
-* Cria o usuário administrador
-* Cria um usuário vendedor padrão
+• Cria todas as tabelas do banco
+• Cria o usuário administrador
+• Cria um usuário vendedor padrão
 
 ---
 
@@ -124,86 +115,47 @@ Esse comando:
 
 Criado automaticamente pelo seeder:
 
-* **Email:** [admin@teloscrm.com](mailto:admin@teloscrm.com)
-* **Senha:** password
-* **Perfil:** Administrador
+• Email: admin@teloscrm.com
+• Senha: password
+• Perfil: Administrador
 
-O administrador tem acesso completo ao sistema.
+O administrador possui acesso total ao sistema.
 
 ---
 
 ### Usuário vendedor (via seeder)
 
-Este sistema foi pensado como um **ERP interno**, portanto **não existe cadastro público de usuários**.
+Este projeto simula um **ERP interno**, portanto **não existe cadastro público de usuários**.
 
-Os vendedores são criados via **seeder**, simulando um cadastro feito por um administrador.
+Os vendedores são criados via **seeder**, representando um cadastro administrativo.
 
-Caso queira recriar o vendedor:
+Caso seja necessário recriar o vendedor, existe um seeder específico para isso.
 
+Credenciais do vendedor padrão:
 
-./vendor/bin/sail artisan make:seeder VendedorUserSeeder
+• Email: vendedor@teloscrm.com
+• Senha: password
+• Perfil: Vendedor
 
-
-Arquivo:
-
-
-database/seeders/VendedorUserSeeder.php
-
-
-Conteúdo:
-
-
-User::firstOrCreate(
-    ['email' => 'vendedor@teloscrm.com'],
-    [
-        'name' => 'Vendedor Teste',
-        'password' => Hash::make('password'),
-        'tipo' => 'vendedor',
-        'status' => true,
-    ]
-);
-
-
-Registrar no `DatabaseSeeder.php`:
-
-
-$this->call(VendedorUserSeeder::class);
-
-
-Executar:
-
-
-./vendor/bin/sail artisan db:seed
-
-
-Credenciais do vendedor:
-
-* **Email:** [vendedor@teloscrm.com](mailto:vendedor@teloscrm.com)
-* **Senha:** password
-* **Perfil:** Vendedor
-
-O vendedor só consegue acessar dados após estar vinculado a um fornecedor.
+Importante: o vendedor só terá acesso aos dados após estar vinculado a um fornecedor.
 
 ---
 
 ## Vínculo vendedor × fornecedor
 
-Essa funcionalidade é exclusiva para administradores.
+Funcionalidade exclusiva para administradores.
 
-URL:
-
-
+Tela disponível em:
 /vinculos
 
-
-Passos:
+Fluxo:
 
 1. Logar como administrador
 2. Selecionar o vendedor
 3. Selecionar o fornecedor
 4. Clicar em “Vincular”
 
-Esse vínculo define quais fornecedores, produtos, pedidos e dados de API o vendedor pode acessar.
+Esse vínculo controla quais fornecedores, produtos, pedidos e dados de API o vendedor pode acessar.
 
 ---
 
@@ -211,31 +163,38 @@ Esse vínculo define quais fornecedores, produtos, pedidos e dados de API o vend
 
 ### Dashboard
 
-Após o login em http://localhost, o sistema apresenta um dashboard com:
+Após o login http://localhost, o sistema apresenta um dashboard com:
 
-* Total de pedidos
-* Valor total dos pedidos
-* Pedidos agrupados por status
-* Gráfico com Chart.js
-* Menu de navegação rápida
+• Total de pedidos
+• Valor total dos pedidos
+• Pedidos agrupados por status
+• Gráfico com Chart.js
+• Menu de navegação rápida
+
+---
 
 ### Fornecedores
 
-* Cadastro
-* Edição
-* Ativação e inativação
+• Cadastro
+• Edição
+• Ativação e inativação
+
+---
 
 ### Produtos
 
-* Cadastro manual
-* Listagem
-* Upload de produtos via CSV
+• Cadastro manual
+• Listagem
+• Upload de produtos via CSV
+
+---
 
 ### Pedidos
 
-* Criação de pedidos
-* Listagem
-* Cálculo automático do valor total
+• Criação de pedidos
+• Listagem
+• Cálculo automático do valor total
+• Botão para envio manual de relatório por e-mail
 
 ---
 
@@ -243,17 +202,12 @@ Após o login em http://localhost, o sistema apresenta um dashboard com:
 
 Formato esperado do arquivo:
 
-csv
 fornecedor_id,nome,cor,preco
 3,Produto A,Azul,10.50
 4,Produto B,Vermelho,20.00
 
-
 Tela disponível em:
-
-
 /produtos/upload
-
 
 O processamento do arquivo ocorre via **Job em background**.
 
@@ -261,33 +215,54 @@ O processamento do arquivo ocorre via **Job em background**.
 
 ## Filas (Jobs)
 
-Para processar jobs (upload CSV, e-mails, relatórios), é necessário rodar:
+O sistema utiliza filas para:
 
+• Processar upload de CSV
+• Enviar e-mails
+• Gerar relatórios
 
-./vendor/bin/sail artisan queue:work
-
+Para que essas tarefas sejam executadas, é necessário manter o worker de filas rodando.
 
 ---
 
 ## Visualização de e-mails
 
-Os e-mails enviados pelo sistema podem ser visualizados no Mailpit:
+Todos os e-mails enviados pelo sistema podem ser visualizados no Mailpit.
 
-
+URL:
 http://localhost:8025
-
 
 ---
 
-## Relatório diário (Cron)
+## Relatórios de pedidos (Job + Cron)
 
-Existe um job agendado para gerar relatórios automáticos.
+### Relatório automático (agendado)
 
-Para executar manualmente (simulação):
+Existe um Job responsável por gerar relatórios de pedidos.
 
+Esse Job está configurado para rodar **todos os dias às 08:00 da manhã**, no horário de São Paulo, utilizando o Scheduler do Laravel.
 
-./vendor/bin/sail artisan schedule:run
+O relatório é enviado por e-mail e utiliza fila para processamento.
 
+---
+
+### Testar o relatório fora do horário
+
+Para simular a execução do agendamento (cron), é possível executar manualmente o scheduler do Laravel.
+
+Isso dispara exatamente o mesmo Job que rodaria automaticamente às 08h.
+
+---
+
+### Disparo manual do relatório (via interface)
+
+Além do agendamento automático, o sistema possui um **botão na tela de pedidos** que permite:
+
+• Disparar manualmente o envio do relatório
+• Executar o mesmo Job utilizado pelo cron
+• Facilitar testes e validação da funcionalidade
+
+O envio também ocorre via fila.
 
 ---
 
@@ -295,63 +270,60 @@ Para executar manualmente (simulação):
 
 ### Autenticação
 
+A API utiliza autenticação via token.
 
-curl -X POST http://localhost/api/v1/autenticacao \
--H "Content-Type: application/json" \
--d '{"email":"admin@teloscrm.com","password":"password"}'
+Para obter o token, é necessário realizar login via endpoint de autenticação, informando email e senha de um usuário válido.
 
+A resposta retorna um token que deve ser utilizado nas requisições seguintes.
 
-A resposta retorna um token de autenticação.
+---
 
-### Header obrigatório
+### Header obrigatório nas requisições
 
-
-Authorization: Bearer SEU_TOKEN_AQUI
+Authorization: Bearer SEU_TOKEN
 Content-Type: application/json
 
+---
 
 ### Endpoints disponíveis
 
-* GET `/api/v1/fornecedor/{cnpj}/pedidos`
-* GET `/api/v1/pedidos/{id}`
-* POST `/api/v1/pedidos`
-* PUT `/api/v1/pedidos/{id}`
-* DELETE `/api/v1/pedidos/{id}`
+• GET /api/v1/fornecedor/{cnpj}/pedidos
+• GET /api/v1/pedidos/{id}
+• POST /api/v1/pedidos
+• PUT /api/v1/pedidos/{id}
+• DELETE /api/v1/pedidos/{id}
 
-Todas as rotas da API exigem autenticação via token.
+Todas as rotas exigem autenticação via token.
 
 ---
 
 ## Cache (Redis)
 
-Para limpar o cache manualmente:
+O dashboard utiliza cache para melhorar a performance.
 
-
-./vendor/bin/sail artisan cache:clear
-
+Caso seja necessário limpar o cache manualmente, existe um comando específico para isso.
 
 ---
 
 ## Comandos úteis
 
-
-./vendor/bin/sail down
-./vendor/bin/sail artisan optimize:clear
-./vendor/bin/sail artisan route:list
-
+• Parar os containers
+• Limpar cache e otimizações
+• Listar rotas do sistema
 
 ---
 
 ## Status do projeto
 
-* Todas as etapas do teste foram implementadas
-* O sistema está funcional
-* Código organizado e comentado
-* Pronto para avaliação
+• Todas as etapas do teste foram implementadas
+• Sistema funcional
+• Código organizado e comentado
+• Pronto para avaliação
 
 ---
 
 ## Autor
 
-**Silas Henrique de Oliveira**
+Silas Henrique de Oliveira
 Teste Técnico — Programador Full Stack
+

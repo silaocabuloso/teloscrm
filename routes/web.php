@@ -28,6 +28,12 @@ Route::get('/', function () {
 */
 Route::middleware(['auth', 'usuario.ativo'])->group(function () {
 
+Route::post(
+    '/pedidos/relatorio/manual',
+    [RelatorioController::class, 'enviarManual']
+)->name('pedidos.relatorio.manual');
+
+
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth'])
     ->name('dashboard');

@@ -11,11 +11,20 @@ Artisan::command('inspire', function () {
 
 /*
 |--------------------------------------------------------------------------
-| Console Routes
+| Console Routes (Laravel 12)
 |--------------------------------------------------------------------------
-| Aqui definimos comandos e agendamentos no Laravel 12
+| Aqui definimos comandos e agendamentos (Scheduler)
+|
+| IMPORTANTE:
+| - O Scheduler NÃO deve despachar Job para fila nesse caso
+| - Executamos o Job diretamente para garantir execução confiável
 */
 
-// Agendamento do relatório diário
-Schedule::job(new RelatorioPedidosJob)
-    ->dailyAt('08:00');
+// Relatório diário de pedidos — todos os dias às 08:00 (horário de Brasília)
+Schedule::call(function () {
+    // Executa o Job diretamente (sem fila)
+    (new RelatorioPedidosJob)->handle();
+})
+//->dailyAt('08:00')
+->everyMinute()
+->timezone('America/Sao_Paulo');

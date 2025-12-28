@@ -1,4 +1,5 @@
 <script setup>
+import { router } from '@inertiajs/vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
 
 defineProps({
@@ -16,6 +17,19 @@ function formatarData(data) {
 function formatarValor(valor) {
     return Number(valor).toFixed(2)
 }
+
+/**
+ * Disparo manual do relatório de pedidos (últimos 7 dias)
+ */
+function enviarRelatorio() {
+    if (!confirm('Deseja enviar por e-mail o relatório dos pedidos dos últimos 7 dias?')) {
+        return
+    }
+
+    router.post(route('pedidos.relatorio.manual'), {}, {
+        preserveScroll: true,
+    })
+}
 </script>
 
 <template>
@@ -23,11 +37,21 @@ function formatarValor(valor) {
         <div class="p-6 max-w-6xl mx-auto">
 
             <!-- HEADER -->
-            <div class="mb-6">
-                <h1 class="text-2xl font-bold">Pedidos</h1>
-                <p class="text-gray-600">
-                    Listagem de pedidos cadastrados no sistema
-                </p>
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h1 class="text-2xl font-bold">Pedidos</h1>
+                    <p class="text-gray-600">
+                        Listagem de pedidos cadastrados no sistema
+                    </p>
+                </div>
+
+                <!-- BOTÃO RELATÓRIO MANUAL -->
+                <button
+                    @click="enviarRelatorio"
+                    class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
+                >
+                    Enviar relatório (7 dias)
+                </button>
             </div>
 
             <!-- TABELA -->
@@ -54,7 +78,7 @@ function formatarValor(valor) {
                             </td>
 
                             <td>
-                                {{ pedido.fornecedor?.nome }}
+                                {{ pedido.fornecedor?.nome ?? '-' }}
                             </td>
 
                             <td>
@@ -76,10 +100,7 @@ function formatarValor(valor) {
                         </tr>
 
                         <tr v-if="pedidos.length === 0">
-                            <td
-                                colspan="5"
-                                class="empty"
-                            >
+                            <td colspan="5" class="empty">
                                 Nenhum pedido encontrado.
                             </td>
                         </tr>
