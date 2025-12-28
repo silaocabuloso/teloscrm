@@ -4,6 +4,12 @@ import { router } from '@inertiajs/vue3'
 function go(url) {
     router.visit(url)
 }
+
+function logout() {
+    router.post('/logout')
+}
+
+
 </script>
 
 <template>
@@ -61,6 +67,10 @@ function go(url) {
                     Vínculo Vendedor / Fornecedor
                 </button>
             </li>
+
+               <button @click="logout">
+        Sair
+    </button>
         </ul>
     </nav>
 </template>

@@ -13,6 +13,8 @@ class DatabaseSeeder extends Seeder
     {
         // Seeder do usuário administrador
         $this->call(AdminUserSeeder::class);
+          // Seeder do usuário vendedor
+        $this->call(VendedorUserSeeder::class);
 
 
     }
