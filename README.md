@@ -304,6 +304,11 @@ O envio também ocorre via fila.
 ![Vínculos](screenshots/vinculos.PNG)
 
 
+---
+
+###  Email
+![Email](screenshots/email.PNG)
+
 ## API de pedidos
 
 ### Autenticação
