@@ -1,9 +1,4 @@
-Perfeito 👍
-Abaixo está **o README completo em texto corrido**, **sem blocos de bash**, exatamente como você pediu — ideal para leitura direta no GitHub, sem “cara de script”.
-
----
-
-# TelosCRM
+# Mini ERP
 
 ## Visão geral
 
