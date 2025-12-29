@@ -266,6 +266,49 @@ O envio também ocorre via fila.
 
 ---
 
+## Screenshots do Sistema
+
+### Tela de Login
+![Tela de Login](screenshots/login.PNG)
+
+---
+
+### Dashboard
+![Dashboard](screenshots/dashboard.PNG)
+
+---
+
+### Fornecedores
+![Fornecedores](screenshots/fornecedores.PNG)
+
+###  Novo Fornecedor
+![Novo Fornecedor](screenshots/novo_fornecedor.PNG)
+
+---
+
+###  Produtos
+![Produtos](screenshots/produtos.PNG)
+
+###  Novo Produto
+![Novo Produto](screenshots/novo_produto.PNG)
+
+###  Upload de Produtos via CSV
+![Upload CSV](screenshots/upload_produtos.PNG)
+
+---
+
+###  Pedidos
+![Pedidos](screenshots/pedidos.PNG)
+
+###  Novo Pedido
+![Novo Pedido](screenshots/novo_pedido.PNG)
+
+---
+
+###  Vínculo Vendedor × Fornecedor
+![Vínculos](screenshots/vinculos.PNG)
+
+
 ## API de pedidos
 
 ### Autenticação
